@@ -38,22 +38,22 @@ namespace nl.hyperdata.music
 
         private static void Main()
         {
-            TwelveToneEqualTemperament allPitches = TwelveToneEqualTemperament.Default;
 
-            IPitch root = allPitches.Find(261.6300000000000000);
-            IPitch top = allPitches.Find(2093.000000000000000);
+            IPitch root = TwelveToneEqualTemperament.Default.Find(16.350000);
 
-            //WriteSet("allpitches", allPitches);
+            WriteSet("allpitches", TwelveToneEqualTemperament.Default);
+
 
             IMode mode = ModernModes.Ionian;
-         //   WriteSet("mode ionian", mode);
+            WriteSet("mode ionian", mode);
 
-            IVoice voice = new Voice(allPitches, root.Value, top.Value);
-            WriteSet("voice soprano", voice);
-
-            IScale scale = new Scale(voice, root, mode);
+            IScale scale = new Scale(TwelveToneEqualTemperament.Default, root, mode);
             WriteSet("currentscale", scale);
-
+          
+            IVoice voice = Voice.Soprano(scale);
+  
+            WriteSet("voice soprano", voice);
+            
             Sequence sequence = new Sequence(scale);
 
             sequence.Begin(scale.Transpose(root, DiatonicIntervalsAscending.PerfectTwelveth))
