@@ -19,8 +19,14 @@ namespace nl.hyperdata.music.core
                 throw new ArgumentNullException(nameof(other));
             }
 
-            return (int)((Value * 1000000) - (other.Value * 1000000));
+            return CompareTo(other.Value);
         }
+
+        public int CompareTo(double other)
+        {
+            return (int)((Value * 1000000) - (other * 1000000));
+        }
+
 
         public override bool Equals(object obj)
         {
@@ -47,6 +53,7 @@ namespace nl.hyperdata.music.core
             return Value.GetHashCode();
         }
 
+ 
         public static bool operator ==(ElementBase left, IElementBase right)
         {
             if (ReferenceEquals(left, null))
@@ -82,6 +89,7 @@ namespace nl.hyperdata.music.core
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
 
+
         public static double operator *(ElementBase left, IElementBase right)
         {
             return left.Value * right.Value;
@@ -96,5 +104,57 @@ namespace nl.hyperdata.music.core
         {
             return left.Value % right.Value;
         }
+
+        public static bool operator ==(ElementBase left, double right)
+        {
+            if (ReferenceEquals(left, null))
+            {
+                return ReferenceEquals(right, null);
+            }
+
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ElementBase left, double right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator <(ElementBase left, double right)
+        {
+            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(ElementBase left, double right)
+        {
+            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >(ElementBase left, double right)
+        {
+            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+        }
+
+        public static bool operator >=(ElementBase left, double right)
+        {
+            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
+        }
+
+
+        public static double operator *(ElementBase left, double right)
+        {
+            return left.Value * right;
+        }
+
+        public static double operator /(ElementBase left, double right)
+        {
+            return left.Value * right;
+        }
+
+        public static double operator %(ElementBase left, double right)
+        {
+            return left.Value % right;
+        }
     }
 }
+

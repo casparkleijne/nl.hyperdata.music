@@ -2,7 +2,7 @@
 
 namespace nl.hyperdata.music.core.Collections
 {
-    public interface IScale : IEnumerable<IPitch>
+    public interface IScale : ICollectionBase<IPitch>
     {
         IMode Mode { get; }
         IPitch Root { get; }

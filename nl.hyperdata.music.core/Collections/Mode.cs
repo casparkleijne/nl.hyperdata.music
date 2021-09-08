@@ -4,13 +4,9 @@ namespace nl.hyperdata.music.core.Collections
 {
     internal class Mode : CollectionBase<IInterval>, IMode
     {
-        public Mode(IEnumerable<IInterval> intervals)
+        public Mode(IEnumerable<IInterval> intervals) : base(intervals)
         {
-            Context = intervals ?? throw new System.ArgumentNullException(nameof(intervals));
+
         }
-
-        protected override IEnumerable<IInterval> Context { get; }
-
-
     }
 }

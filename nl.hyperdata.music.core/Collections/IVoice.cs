@@ -2,7 +2,7 @@
 
 namespace nl.hyperdata.music.core.Collections
 {
-    public interface IVoice : IEnumerable<IPitch>
+    public interface IVoice :  ICollectionBase<IPitch>
     {
         /**
         Soprano: B3(A3) - D6 (246.942 - 1174.66Hz). Some coloratua soprano roles go up to A6 (1760Hz)

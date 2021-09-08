@@ -45,6 +45,7 @@
     <Compile Include="Collections\Diatonic\DiatonicIntervalsAscending.cs" />
     <Compile Include="Collections\Diatonic\DiatonicIntervalsDescending.cs" />
     <Compile Include="Collections\Diatonic\StrictModes.cs" />
+    <Compile Include="Collections\ICollectionBase.cs" />
     <Compile Include="Extensions\ElementExtensions.cs" />
     <Compile Include="IElementBase.cs" />
     <Compile Include="PitchDegree.cs" />

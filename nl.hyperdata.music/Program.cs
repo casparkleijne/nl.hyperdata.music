@@ -48,10 +48,10 @@ namespace nl.hyperdata.music
             IMode mode = ModernModes.Ionian;
          //   WriteSet("mode ionian", mode);
 
-            IVoice voice = new Voice(allPitches, root, top);
+            IVoice voice = new Voice(allPitches, root.Value, top.Value);
             WriteSet("voice soprano", voice);
 
-            IScale scale = new Scale(root, mode, voice);
+            IScale scale = new Scale(voice, root, mode);
             WriteSet("currentscale", scale);
 
             Sequence sequence = new Sequence(scale);

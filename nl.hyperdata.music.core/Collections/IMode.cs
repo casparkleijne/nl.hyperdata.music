@@ -2,7 +2,7 @@
 
 namespace nl.hyperdata.music.core.Collections
 {
-    public interface IMode : IEnumerable<IInterval>
+    public interface IMode : ICollectionBase<IInterval>
     {
 
     }

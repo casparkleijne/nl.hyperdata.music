@@ -151,8 +151,7 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
             IntervalDirection.Ascending
         );
 
-        protected override IEnumerable<IInterval> Context =>
-            new List<IInterval>
+        public DiatonicIntervalsAscending() : base(new List<IInterval>
             {
                 Unison,
                 MinorSecond,
@@ -172,7 +171,11 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
                 PerfectEleventh,
                 AugmentedEleventh,
                 PerfectTwelveth
-           };
+           })
+        {
+
+        }
+
 
     }
 

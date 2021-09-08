@@ -5,28 +5,24 @@ using System.Linq;
 
 namespace nl.hyperdata.music.core.Collections
 {
-    public abstract class CollectionBase<T> : IEnumerable<T>, IReadOnlyCollection<T>, IEquatable<CollectionBase<T>>
+    public abstract class CollectionBase<T> : ICollectionBase<T>
     {
+
+        public CollectionBase(IEnumerable<T> context)
+        {
+            Context = context ?? throw new ArgumentNullException(nameof(context));
+        }
 
         public int Count => Context.Count();
 
+        public IEnumerable<T> Context { get; }
 
-        protected abstract IEnumerable<T> Context { get; }
 
         public IEnumerator<T> GetEnumerator()
         {
             return Context.GetEnumerator();
         }
 
-        public T Find(Func<T, bool> expression)
-        {
-            if (expression is null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
-
-            return Context.FirstOrDefault(expression);
-        }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -42,5 +38,6 @@ namespace nl.hyperdata.music.core.Collections
 
             throw new NotImplementedException();
         }
+
     }
 }

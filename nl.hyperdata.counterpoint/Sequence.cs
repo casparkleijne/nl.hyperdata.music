@@ -10,17 +10,17 @@ using MoreLinq.Extensions;
 namespace nl.hyperdata.counterpoint
 {
 
-    public class Sequence : CollectionBase<SequenceElement>
+    public class Sequence : IEnumerable<SequenceElement>
     {
         private static readonly DiatonicIntervals availableIntervals = new DiatonicIntervals();
-        private Stack<SequenceElement> elements = new Stack<SequenceElement>();
-        public Sequence(IScale scale)
+        private readonly Stack<SequenceElement> elements = new Stack<SequenceElement>();
+
+        public Sequence(IScale scale) : base()
         {
             Scale = scale;
-            Context = elements;
         }
-        protected override IEnumerable<SequenceElement> Context { get; }
-        public IEnumerable<IPitch> Melody => Context.Reverse().Select(x => x.Pitch);
+       
+        public IEnumerable<IPitch> Melody => elements.Reverse().Select(x => x.Pitch);
         public IScale Scale { get; }
         public Sequence Begin(IPitch pitch)
         {
@@ -43,21 +43,21 @@ namespace nl.hyperdata.counterpoint
         }
         public SequenceElement ElementAt(int index)
         {
-            return Context.Reverse().ElementAt(index);
+            return elements.Reverse().ElementAt(index);
         }
         public SequenceElement First()
         {
-            return Context.Reverse().FirstOrDefault();
+            return elements.Reverse().FirstOrDefault();
         }
         public SequenceElement Last()
         {
-            return Context.Reverse().LastOrDefault();
+            return elements.Reverse().LastOrDefault();
         }
 
 
         public IEnumerable<SequenceElement> Outline()
         {
-            var u = Context.GroupAdjacent(x => x.Interval?.Direction)
+            var u = elements.GroupAdjacent(x => x.Interval?.Direction)
                 .Select(x => x.FirstOrDefault().Pitch);
 
             var result =  u.Zip(u.Skip(1), (p, v) =>
@@ -68,7 +68,7 @@ namespace nl.hyperdata.counterpoint
                 }
             ).Reverse();
 
-            yield return Context.LastOrDefault();
+            yield return elements.LastOrDefault();
             
             foreach(var elem in result)
             {
@@ -99,5 +99,14 @@ namespace nl.hyperdata.counterpoint
             return this;
         }
 
+        public IEnumerator<SequenceElement> GetEnumerator()
+        {
+            return elements.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return elements.GetEnumerator();
+        }
     }
 }

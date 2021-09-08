@@ -4,37 +4,19 @@ using System.Linq;
 
 namespace nl.hyperdata.music.core.Collections
 {
+
+    /// <summary>
+    /// The voice.
+    /// </summary>
+    /// 
     public class Voice : CollectionBase<IPitch>, IVoice
     {
-        public Voice(IEnumerable<IPitch> pitches, IPitch lowest, IPitch highest)
+        public Voice(IEnumerable<IPitch> pitches, double lowestfrequency, double highestfrequency) : base(pitches.Where(pitch=>(ElementBase)pitch >= lowestfrequency && (ElementBase)pitch <= highestfrequency))
         {
-            if (pitches is null)
-            {
-                throw new ArgumentNullException(nameof(pitches));
-            }
-
-            Lowest = lowest ?? throw new ArgumentNullException(nameof(lowest));
-            Highest = highest ?? throw new ArgumentNullException(nameof(highest));
-
-            var o = lowest.Equals(highest);
-
-
-
-            Context = pitches
-                .SkipWhile(p => !p.Equals(lowest))
-                .TakeWhile(p => !p.Equals(highest)).ToList();
-
-            if(Context.Count()== 0)
-            {
-                throw new ArgumentException(nameof(pitches));
-            }
+  
         }
 
-
-
-        public IPitch Lowest { get; }
-        public IPitch Highest { get; }
-        protected override IEnumerable<IPitch> Context { get; }
-
+        public IPitch Lowest => Context.Min();
+        public IPitch Highest => Context.Max();
     }
 }
