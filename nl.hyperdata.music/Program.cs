@@ -38,7 +38,7 @@ namespace nl.hyperdata.music
 
         private static void Main()
         {
-            TwelveToneEqualTemperament allPitches = TwelveToneEqualTemperament.Default.Value;
+            TwelveToneEqualTemperament allPitches = TwelveToneEqualTemperament.Default;
 
             IPitch root = allPitches.Find(261.6300000000000000);
             IPitch top = allPitches.Find(2093.000000000000000);
