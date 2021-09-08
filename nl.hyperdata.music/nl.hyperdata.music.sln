@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nl.hyperdata.music", "nl.hyperdata.music.csproj", "{190A35CD-E164-47E4-9367-E039D2051924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nl.hyperdata.music.core", "..\nl.hyperdata.music.core\nl.hyperdata.music.core.csproj", "{0F21F6CD-392B-4811-8DBE-AABBC8452DE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nl.hyperdata.music.midi", "..\nl.hyperdata.music.midi\nl.hyperdata.music.midi.csproj", "{ACC0B7E7-1B8A-45C4-AB86-6DEE409700F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nl.hyperdata.counterpoint", "..\nl.hyperdata.counterpoint\nl.hyperdata.counterpoint.csproj", "{F06150EA-4B40-4C1E-AF1C-BA777192C553}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nl.hyperdata.music.coreTests", "..\nl.hyperdata.music.coreTests\nl.hyperdata.music.coreTests.csproj", "{0737976E-298F-4908-8DAB-815589180846}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{190A35CD-E164-47E4-9367-E039D2051924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{190A35CD-E164-47E4-9367-E039D2051924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{190A35CD-E164-47E4-9367-E039D2051924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{190A35CD-E164-47E4-9367-E039D2051924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F21F6CD-392B-4811-8DBE-AABBC8452DE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F21F6CD-392B-4811-8DBE-AABBC8452DE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F21F6CD-392B-4811-8DBE-AABBC8452DE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F21F6CD-392B-4811-8DBE-AABBC8452DE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACC0B7E7-1B8A-45C4-AB86-6DEE409700F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC0B7E7-1B8A-45C4-AB86-6DEE409700F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC0B7E7-1B8A-45C4-AB86-6DEE409700F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC0B7E7-1B8A-45C4-AB86-6DEE409700F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06150EA-4B40-4C1E-AF1C-BA777192C553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06150EA-4B40-4C1E-AF1C-BA777192C553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06150EA-4B40-4C1E-AF1C-BA777192C553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06150EA-4B40-4C1E-AF1C-BA777192C553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0737976E-298F-4908-8DAB-815589180846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0737976E-298F-4908-8DAB-815589180846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0737976E-298F-4908-8DAB-815589180846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0737976E-298F-4908-8DAB-815589180846}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B2C13CA-1C53-4CA3-B2FC-363C9A9A33C3}
+	EndGlobalSection
+EndGlobal
