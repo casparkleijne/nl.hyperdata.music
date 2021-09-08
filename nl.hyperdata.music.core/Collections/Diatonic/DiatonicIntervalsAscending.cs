@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace nl.hyperdata.music.core.Collections.Diatonic
 {
-    public class DiatonicIntervalsAscending : IEnumerable<IInterval>
+    public class DiatonicIntervalsAscending : CollectionBase<IInterval>
     {
 
         public static IInterval Unison => new Interval
@@ -152,7 +152,7 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
             Direction.Ascending
         );
 
-        private static readonly List<IInterval> items =
+        protected override IEnumerable<IInterval> Context => 
             new List<IInterval>
             {
                 Unison,
@@ -174,15 +174,6 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
                 AugmentedEleventh,
                 PerfectTwelveth
            };
-
-        public IEnumerator<IInterval> GetEnumerator()
-        {
-            return ((IEnumerable<IInterval>)items).GetEnumerator();
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable)items).GetEnumerator();
-        }
 
     }
 
