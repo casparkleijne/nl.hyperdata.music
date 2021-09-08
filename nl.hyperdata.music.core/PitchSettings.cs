@@ -21,11 +21,21 @@ namespace nl.hyperdata.music.core
 
         public override bool Equals(object obj)
         {
+            if (obj is null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+
             return Equals(obj as PitchSettings);
         }
 
         public bool Equals(PitchSettings other)
         {
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             return other != null &&
                    TwelfthRootOfTwo == other.TwelfthRootOfTwo &&
                    BaseFrequency == other.BaseFrequency &&
@@ -43,11 +53,31 @@ namespace nl.hyperdata.music.core
 
         public static bool operator ==(PitchSettings left, PitchSettings right)
         {
+            if (left is null)
+            {
+                throw new ArgumentNullException(nameof(left));
+            }
+
+            if (right is null)
+            {
+                throw new ArgumentNullException(nameof(right));
+            }
+
             return EqualityComparer<PitchSettings>.Default.Equals(left, right);
         }
 
         public static bool operator !=(PitchSettings left, PitchSettings right)
         {
+            if (left is null)
+            {
+                throw new ArgumentNullException(nameof(left));
+            }
+
+            if (right is null)
+            {
+                throw new ArgumentNullException(nameof(right));
+            }
+
             return !(left == right);
         }
     }

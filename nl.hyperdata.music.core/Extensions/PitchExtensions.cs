@@ -1,56 +1,60 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace nl.hyperdata.music.core.Extensions
 {
     public static class PitchExtensions
     {
-        public static IPitch Find(this IEnumerable<IPitch> context, IPitch pitch)
-        {
-            return context.FirstOrDefault(p => p.Equals(pitch));
-        }
-        public static IPitch Find(this IEnumerable<IPitch> context, double frequency)
-        {
-            return context.FirstOrDefault(p => p.Equals(frequency));
-        }
+
 
         public static IPitch Transpose(this IEnumerable<IPitch> context, IPitch pitch, IInterval interval)
         {
-            if (interval == null)
+            if (context is null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(context));
             }
 
-            if (pitch == null)
+            if (pitch is null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(pitch));
             }
 
-            return Find(context, pitch.Frequency * interval.Ratio);
+            if (interval is null)
+            {
+                throw new ArgumentNullException(nameof(interval));
+            }
+
+            return context.Find((ElementBase)pitch * (ElementBase)interval);
+
         }
-
+        
         public static IInterval TransposeInterval(this IEnumerable<IPitch> context, IPitch pitch, IEnumerable<IInterval> intervals)
         {
-            return intervals
-                .Where(i => Find(context, pitch.Frequency * i.Ratio) != null)
-                .FirstOrDefault();
-        }
-
-        public static IPitch TransposeFirstOrDefault(this IEnumerable<IPitch> context, IPitch pitch, IEnumerable<IInterval> intervals)
-        {
-            if (pitch == null)
+            if (context is null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(context));
             }
-            return intervals
-                .Select(i => Find(context, pitch.Frequency * i.Ratio))
-                .FirstOrDefault(i => i != null);
-        }
 
-        public static IEnumerable<IPitch> FilterIncremental(this IEnumerable<IPitch> context, IEnumerable<IInterval> intervals, IPitch root)
-        {
-            return intervals.Select((_, n) =>
-              intervals.Take(n).Aggregate(root, (a, i) => context.Transpose(a, i)));
+            if (pitch is null)
+            {
+                throw new ArgumentNullException(nameof(pitch));
+            }
+
+            if (intervals is null)
+            {
+                throw new ArgumentNullException(nameof(intervals));
+            }
+
+            foreach(var interval in intervals)
+            {
+                if(context.Transpose(pitch,interval)!=null)
+                {
+                    return interval;
+                }
+            }
+
+            return null;
         }
 
     }

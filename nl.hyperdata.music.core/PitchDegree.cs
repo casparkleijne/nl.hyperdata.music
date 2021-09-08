@@ -1,6 +1,6 @@
 ﻿namespace nl.hyperdata.music.core
 {
-    public enum Degree
+    public enum PitchDegree
     {
         Tonic,
         Supertonic,

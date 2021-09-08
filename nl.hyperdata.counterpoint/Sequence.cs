@@ -76,7 +76,7 @@ namespace nl.hyperdata.counterpoint
             }
         }
 
-        public Sequence Append(IntervalNumber number, Direction direction)
+        public Sequence Append(IntervalNumber number, IntervalDirection direction)
         {
             // find all possible intervals that exists overall in the application
             IEnumerable<IInterval> possibles = availableIntervals.Find(number, direction);

@@ -2,9 +2,9 @@
 
 namespace nl.hyperdata.music.core
 {
-    public interface IPitch : IComparable<IPitch>, IEquatable<IPitch>, IEquatable<double>
+    public interface IPitch : IElementBase
+
     {
         int Index { get; }
-        double Frequency { get; }
     }
 }

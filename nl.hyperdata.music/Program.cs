@@ -38,18 +38,17 @@ namespace nl.hyperdata.music
 
         private static void Main()
         {
-            TwelveToneEqualTemperament allPitches = TwelveToneEqualTemperament.Default;
+            TwelveToneEqualTemperament allPitches = TwelveToneEqualTemperament.Default.Value;
 
-            IPitch root = allPitches.Find(261.63);
-            root = allPitches.Find(root.Frequency * 2);
-            IPitch top = allPitches.Find(2093.00);
+            IPitch root = allPitches.Find(261.6300000000000000);
+            IPitch top = allPitches.Find(2093.000000000000000);
 
-            WriteSet("allpitches", allPitches);
+            //WriteSet("allpitches", allPitches);
 
             IMode mode = ModernModes.Ionian;
-            WriteSet("mode ionian", mode);
+         //   WriteSet("mode ionian", mode);
 
-            IVoice voice = new Voice(TwelveToneEqualTemperament.Default, root, top);
+            IVoice voice = new Voice(allPitches, root, top);
             WriteSet("voice soprano", voice);
 
             IScale scale = new Scale(root, mode, voice);
@@ -58,22 +57,22 @@ namespace nl.hyperdata.music
             Sequence sequence = new Sequence(scale);
 
             sequence.Begin(scale.Transpose(root, DiatonicIntervalsAscending.PerfectTwelveth))
-                .Append(IntervalNumber.Second, Direction.Ascending)
-                .Append(IntervalNumber.Second, Direction.Ascending)       
-                .Append(IntervalNumber.Second, Direction.Descending)
-                .Append(IntervalNumber.Third,  Direction.Descending)
-                .Append(IntervalNumber.Third, Direction.Ascending)
-                .Append(IntervalNumber.Second, Direction.Descending)
-                .Append(IntervalNumber.Third,  Direction.Descending)
-                .Append(IntervalNumber.Second, Direction.Descending)
-                .Append(IntervalNumber.Second, Direction.Ascending)
-                .Append(IntervalNumber.Second, Direction.Ascending)
-                .Append(IntervalNumber.Second, Direction.Descending)
-                .Append(IntervalNumber.Third, Direction.Descending)
-                .Append(IntervalNumber.Third, Direction.Ascending)
-                .Append(IntervalNumber.Second, Direction.Descending)
-                .Append(IntervalNumber.Third, Direction.Descending)
-                .Append(IntervalNumber.Second, Direction.Descending);
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)       
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Third,  IntervalDirection.Descending)
+                .Append(IntervalNumber.Third, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Third,  IntervalDirection.Descending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Third, IntervalDirection.Descending)
+                .Append(IntervalNumber.Third, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Third, IntervalDirection.Descending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending);
 
 
 
@@ -81,13 +80,13 @@ namespace nl.hyperdata.music
             var end = sequence.Last();
             WriteSet("sequence", sequence.Reverse());
 
-            player.Play(sequence.Select(x => x.Pitch), 300);
+         //   player.Play(sequence.Select(x => x.Pitch), 300);
 
-            Task.Delay(100).Wait();
+          //  Task.Delay(100).Wait();
 
             var outline = sequence.Outline().ToList();
       
-            player.Play(outline.Select(x => x.Pitch), 300);
+          //  player.Play(outline.Select(x => x.Pitch), 300);
             
             WriteSet("outline", outline);
 

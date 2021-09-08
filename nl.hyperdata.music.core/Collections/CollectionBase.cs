@@ -20,6 +20,11 @@ namespace nl.hyperdata.music.core.Collections
 
         public T Find(Func<T, bool> expression)
         {
+            if (expression is null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
             return Context.FirstOrDefault(expression);
         }
 
@@ -30,6 +35,11 @@ namespace nl.hyperdata.music.core.Collections
 
         public bool Equals(CollectionBase<T> other)
         {
+            if (other is null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             throw new NotImplementedException();
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace nl.hyperdata.music.core
 {
-    public enum Direction
+    public enum IntervalDirection
     {
         None = 0,
         Descending = -1,

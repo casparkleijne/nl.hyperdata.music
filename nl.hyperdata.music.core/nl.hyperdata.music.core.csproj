@@ -45,8 +45,10 @@
     <Compile Include="Collections\Diatonic\DiatonicIntervalsAscending.cs" />
     <Compile Include="Collections\Diatonic\DiatonicIntervalsDescending.cs" />
     <Compile Include="Collections\Diatonic\StrictModes.cs" />
-    <Compile Include="Degree.cs" />
-    <Compile Include="Direction.cs" />
+    <Compile Include="Extensions\ElementExtensions.cs" />
+    <Compile Include="IElementBase.cs" />
+    <Compile Include="PitchDegree.cs" />
+    <Compile Include="IntervalDirection.cs" />
     <Compile Include="Extensions\IntervalExtensions.cs" />
     <Compile Include="Extensions\PitchExtensions.cs" />
     <Compile Include="Collections\CollectionBase.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Pitch.cs" />
     <Compile Include="Collections\IVoice.cs" />
     <Compile Include="Collections\VoiceName.cs" />
+    <Compile Include="ElementBase.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

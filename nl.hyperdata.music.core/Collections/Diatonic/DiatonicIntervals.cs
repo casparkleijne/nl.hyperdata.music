@@ -8,7 +8,7 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
         protected override IEnumerable<IInterval> Context =>
             new DiatonicIntervalsAscending()
                 .Concat(new DiatonicIntervalsAscending()
-                    .Select(x=> new Interval(x.Quality,x.Number,1.00 / x.Ratio,Direction.Descending))
+                    .Select(x => new Interval(x.Quality, x.Number, 1.00 / x.Value, IntervalDirection.Descending))
                 );
     }
 

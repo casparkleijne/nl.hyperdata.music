@@ -2,11 +2,10 @@
 
 namespace nl.hyperdata.music.core
 {
-    public interface IInterval : IEquatable<IInterval>, IEquatable<double>
+    public interface IInterval :  IElementBase
     {
-        Direction Direction { get; set; }
+        IntervalDirection Direction { get; }
         IntervalNumber Number { get; }
         IntervalQuality Quality { get; }
-        double Ratio { get; }
     }
 }
