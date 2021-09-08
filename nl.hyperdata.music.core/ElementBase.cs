@@ -97,7 +97,7 @@ namespace nl.hyperdata.music.core
 
         public static double operator /(ElementBase left, IElementBase right)
         {
-            return left.Value * right.Value;
+            return left.Value / right.Value;
         }
 
         public static double operator %(ElementBase left, IElementBase right)
@@ -148,7 +148,7 @@ namespace nl.hyperdata.music.core
 
         public static double operator /(ElementBase left, double right)
         {
-            return left.Value * right;
+            return left.Value / right;
         }
 
         public static double operator %(ElementBase left, double right)

@@ -60,6 +60,8 @@ namespace nl.hyperdata.counterpoint
             var u = elements.GroupAdjacent(x => x.Interval?.Direction)
                 .Select(x => x.FirstOrDefault().Pitch);
 
+            var intervals = new DiatonicIntervals();
+
             var result =  u.Zip(u.Skip(1), (p, v) =>
                 new SequenceElement
                 {

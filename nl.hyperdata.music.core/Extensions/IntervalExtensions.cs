@@ -6,15 +6,6 @@ namespace nl.hyperdata.music.core.Extensions
 {
     public static class IntervalExtensions
     {
-        public static IInterval FindOpposite(this IEnumerable<IInterval> context, double ratio)
-        {
-            if (context is null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            return context.Find(1 / ratio);
-        }
 
         public static IInterval Find(this IEnumerable<IInterval> context, IPitch start, IPitch end)
         {

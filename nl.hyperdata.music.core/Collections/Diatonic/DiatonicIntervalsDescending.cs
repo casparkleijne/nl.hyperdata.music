@@ -151,27 +151,29 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
             IntervalDirection.Descending
         );
 
-        public DiatonicIntervalsDescending() : base(new List<IInterval>
-            {
-                Unison,
-                MinorSecond,
-                MajorSecond,
-                MinorThird,
-                MajorThird,
-                PerfectFourth,
-                Tritone,
-                PerfectFifth,
-                MajorSixth,
-                MajorSeventh,
-                Octave,
-                MinorNinth,
-                MajorNinth,
-                MinorTenth,
-                MajorTenth,
-                PerfectEleventh,
-                AugmentedEleventh,
-                PerfectTwelveth
-           })
+
+        internal readonly static IEnumerable<IInterval> intervals = new List<IInterval>
+        {
+            Unison,
+            MinorSecond,
+            MajorSecond,
+            MinorThird,
+            MajorThird,
+            PerfectFourth,
+            Tritone,
+            PerfectFifth,
+            MajorSixth,
+            MajorSeventh,
+            Octave,
+            MinorNinth,
+            MajorNinth,
+            MinorTenth,
+            MajorTenth,
+            PerfectEleventh,
+            AugmentedEleventh,
+            PerfectTwelveth
+        };
+        public DiatonicIntervalsDescending() : base(intervals)
         {
 
         }
