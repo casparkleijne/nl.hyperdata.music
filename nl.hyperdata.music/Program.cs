@@ -41,15 +41,8 @@ namespace nl.hyperdata.music
 
             IPitch root = TwelveToneEqualTemperament.Default.Find(16.350000);
 
-            WriteSet("allpitches", TwelveToneEqualTemperament.Default);
-
-
-            IMode mode = ModernModes.Ionian;
-            WriteSet("mode ionian", mode);
-
-            IScale scale = new Scale(TwelveToneEqualTemperament.Default, root, mode);
-            WriteSet("currentscale", scale);
-          
+            IScale scale = new Scale(TwelveToneEqualTemperament.Default, root, ModernModes.Ionian);
+            
             IVoice voice = Voice.Soprano(scale);
   
             WriteSet("voice soprano", voice);

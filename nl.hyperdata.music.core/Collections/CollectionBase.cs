@@ -13,6 +13,7 @@ namespace nl.hyperdata.music.core.Collections
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+
         public int Count => Context.Count();
 
         public IEnumerable<T> Context { get; }
