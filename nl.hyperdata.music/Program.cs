@@ -39,6 +39,8 @@ namespace nl.hyperdata.music
         private static void Main()
         {
 
+            WriteSet("allintervals", DiatonicIntervals.Default);
+            
             IPitch root = TwelveToneEqualTemperament.Default.Find(16.350000);
 
             IScale scale = new Scale(TwelveToneEqualTemperament.Default, root, ModernModes.Ionian);
@@ -49,23 +51,9 @@ namespace nl.hyperdata.music
             
             Sequence sequence = new Sequence(scale);
 
-            sequence.Begin(scale.Transpose(root, DiatonicIntervalsAscending.PerfectTwelveth))
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)       
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Third,  IntervalDirection.Descending)
-                .Append(IntervalNumber.Third, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Third,  IntervalDirection.Descending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Third, IntervalDirection.Descending)
-                .Append(IntervalNumber.Third, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Third, IntervalDirection.Descending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending);
+            sequence.Begin(scale.Transpose(root,
+              DiatonicIntervals.Default.FirstOrDefault(i => i.Direction == IntervalDirection.Ascending && i.Quality == IntervalQuality.Perfect && i.Number == IntervalNumber.Twelveth)))
+                .Append(IntervalNumber.Fifth, IntervalDirection.Ascending);
 
 
 

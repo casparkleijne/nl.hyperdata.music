@@ -5,10 +5,10 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
 {
     public class DiatonicIntervals : CollectionBase<IInterval>
     {
-  
 
-        public DiatonicIntervals() : base(new DiatonicIntervalsAscending()
-            .Concat(new DiatonicIntervalsDescending()))
+        public static DiatonicIntervals Default = new DiatonicIntervals();
+
+        public DiatonicIntervals() : base(Enumerable.Range(0, 39).Select(n => new Interval(n-19)))
         {
 
         }
