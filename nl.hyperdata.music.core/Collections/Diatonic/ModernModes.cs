@@ -1,4 +1,4 @@
-﻿
+﻿ 
 using System.Linq;
 
 namespace nl.hyperdata.music.core.Collections.Diatonic

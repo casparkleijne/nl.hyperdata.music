@@ -1,4 +1,5 @@
 ﻿using nl.hyperdata.counterpoint;
+using nl.hyperdata.counterpoint.Extensions;
 using nl.hyperdata.music.core;
 using nl.hyperdata.music.core.Collections;
 using nl.hyperdata.music.core.Collections.Diatonic;
@@ -43,33 +44,43 @@ namespace nl.hyperdata.music
             
             IPitch root = TwelveToneEqualTemperament.Default.Find(16.350000);
 
-            IScale scale = new Scale(TwelveToneEqualTemperament.Default, root, ModernModes.Ionian);
+
             
-            IVoice voice = Voice.Soprano(scale);
-  
-            WriteSet("voice soprano", voice);
-            
-            Sequence sequence = new Sequence(scale);
+            Sequence sequence = new Sequence(ModernModes.Ionian);
 
-            sequence.Begin(scale.Transpose(root,
-              DiatonicIntervals.Default.FirstOrDefault(i => i.Direction == IntervalDirection.Ascending && i.Quality == IntervalQuality.Perfect && i.Number == IntervalNumber.Twelveth)))
-                .Append(IntervalNumber.Fifth, IntervalDirection.Ascending);
+            sequence
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)               
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)              
+                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)               
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)             
+                .Append(IntervalNumber.Second, IntervalDirection.Descending)
+                .Append(IntervalNumber.Second, IntervalDirection.Descending);
+
+            WriteSet("sequence", sequence);
 
 
 
-            var start = sequence.First();
-            var end = sequence.Last();
-            WriteSet("sequence", sequence.Reverse());
+            Console.WriteLine();
+            Console.WriteLine("CF--------------");
+            Console.WriteLine($"allRules { sequence.AllRules() }");
+            Console.WriteLine($"rule1 { sequence.Rule1() }");
+            Console.WriteLine($"rule2 { sequence.Rule2() }");
+            Console.WriteLine($"rule3 { sequence.Rule3() }");
+            Console.WriteLine($"rule4 { sequence.Rule4() }");
+            Console.WriteLine($"rule5 { sequence.Rule5() }");      
+            Console.WriteLine($"rule6 { sequence.Rule6() }");
 
-         //   player.Play(sequence.Select(x => x.Pitch), 300);
 
-          //  Task.Delay(100).Wait();
 
-            var outline = sequence.Outline().ToList();
-      
-          //  player.Play(outline.Select(x => x.Pitch), 300);
-            
-            WriteSet("outline", outline);
+            //   player.Play(sequence.Select(x => x.Pitch), 300);
+
+            //  Task.Delay(100).Wait();
+
+
 
             Console.ReadLine();
 

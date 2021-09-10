@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CantusFirmus.cs" />
+    <Compile Include="Extensions\SequenceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="SequenceElement.cs" />

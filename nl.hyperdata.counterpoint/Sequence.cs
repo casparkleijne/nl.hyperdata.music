@@ -5,62 +5,36 @@ using nl.hyperdata.music.core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using MoreLinq.Extensions;
-
+using nl.hyperdata.counterpoint.Extensions;
+using System.Collections;
 
 namespace nl.hyperdata.counterpoint
 {
 
-    public class Sequence : IEnumerable<SequenceElement>
+    public class Sequence : IEnumerable<IInterval>
     {
         private static readonly DiatonicIntervals availableIntervals = new DiatonicIntervals();
-        private readonly Stack<SequenceElement> elements = new Stack<SequenceElement>();
+        private readonly Stack<IInterval> stack = new Stack<IInterval>();
 
-        public Sequence(IScale scale) : base()
-        {
-            Scale = scale;
-        }
-       
-        public IEnumerable<IPitch> Melody => elements.Reverse().Select(x => x.Pitch);
-        public IScale Scale { get; }
-        public Sequence Begin(IPitch pitch)
-        {
-            elements.Clear();
+        public IMode Mode { get; }
 
-            elements.Push(new SequenceElement
-            {
-                Pitch = pitch
-            });
-
-            return this;
-        }
-        public Sequence RemoveLast()
+        public Sequence(IMode mode) : base()
         {
-            if (elements.Count() > 0)
-            {
-                elements.Pop();
-            }
-            return this;
-        }
-        public SequenceElement ElementAt(int index)
-        {
-            return elements.Reverse().ElementAt(index);
-        }
-        public SequenceElement First()
-        {
-            return elements.Reverse().FirstOrDefault();
-        }
-        public SequenceElement Last()
-        {
-            return elements.Reverse().LastOrDefault();
+            Mode = mode;
         }
 
+        public bool IsValid()
+        {
+            return this.Rule1() && 
+                this.Rule2() && 
+                this.Rule3();
+        }
 
+        /**
         public IEnumerable<SequenceElement> Outline()
         {
-            var u = elements.GroupAdjacent(x => x.Interval?.Direction)
-                .Select(x => x.FirstOrDefault().Pitch);
+            var u = elements.GroupAdjacent(x => x.Direction);
 
-            var intervals = new DiatonicIntervals();
 
             var result =  u.Zip(u.Skip(1), (p, v) =>
                 new SequenceElement
@@ -77,38 +51,31 @@ namespace nl.hyperdata.counterpoint
                 yield return elem;
             }
         }
+        **/
+
 
         public Sequence Append(IntervalNumber number, IntervalDirection direction)
         {
-            // find all possible intervals that exists overall in the application
-            IEnumerable<IInterval> possibles = availableIntervals.Find(number, direction);
-
-            // find the specific interval that fits the scale;
-            IInterval interval = Scale.TransposeInterval(elements.Peek().Pitch, possibles);
-
-            // find the pich that is the result of the transposition
-            IPitch pitch = Scale.Transpose(elements.Peek().Pitch, interval);
-
-            if (pitch != null)
+            if(stack.Count() == 0)
             {
-                elements.Push(new SequenceElement
-                {
-                    Pitch = pitch,
-                    Interval = interval
-                });
+
             }
+            var current = stack.Peek();
+
+
+            
 
             return this;
         }
 
-        public IEnumerator<SequenceElement> GetEnumerator()
+        public IEnumerator<IInterval> GetEnumerator()
         {
-            return elements.GetEnumerator();
+            return ((IEnumerable<IInterval>)stack).GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return elements.GetEnumerator();
+            return ((IEnumerable)stack).GetEnumerator();
         }
     }
 }
