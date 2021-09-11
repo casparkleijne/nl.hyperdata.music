@@ -14,7 +14,7 @@ namespace nl.hyperdata.music.core
                 (IntervalQuality.Minor      ,IntervalNumber.Third  ),
                 (IntervalQuality.Major      ,IntervalNumber.Third  ),
                 (IntervalQuality.Perfect    ,IntervalNumber.Fourth ),
-                (IntervalQuality.Augmented  ,IntervalNumber.Fourth),
+                (IntervalQuality.Augmented  ,IntervalNumber.Tritone),
                 (IntervalQuality.Perfect    ,IntervalNumber.Fifth  ),
                 (IntervalQuality.Minor      ,IntervalNumber.Sixth  ),
                 (IntervalQuality.Major      ,IntervalNumber.Sixth  ),
@@ -26,7 +26,7 @@ namespace nl.hyperdata.music.core
                 (IntervalQuality.Minor      ,IntervalNumber.Tenth),
                 (IntervalQuality.Major      ,IntervalNumber.Tenth),
                 (IntervalQuality.Perfect    ,IntervalNumber.Eleventh),
-                (IntervalQuality.Augmented  ,IntervalNumber.Eleventh),
+                (IntervalQuality.Augmented  ,IntervalNumber.EleventhTritone),
                 (IntervalQuality.Perfect    ,IntervalNumber.Twelveth),
 
             };
@@ -38,7 +38,6 @@ namespace nl.hyperdata.music.core
             Number = Intervals[Math.Abs((int)factor)].Item2;
             Direction = (IntervalDirection)Math.Sign(factor);
         }
-
 
         public Interval(IntervalQuality quality, IntervalNumber number, double ratio, IntervalDirection direction = IntervalDirection.Descending) : base(ratio)
         {
@@ -56,6 +55,7 @@ namespace nl.hyperdata.music.core
             return $"{ Quality}{Number} {Direction} { Value }";
         }
 
+   
     }
 
 }

@@ -6,6 +6,7 @@
         Second,
         Third,
         Fourth,
+        Tritone,
         Fifth,
         Sixth,
         Seventh,
@@ -13,6 +14,7 @@
         Ninth,
         Tenth,
         Eleventh,
-        Twelveth
+        Twelveth,
+        EleventhTritone
     }
 }

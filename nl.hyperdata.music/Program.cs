@@ -40,29 +40,25 @@ namespace nl.hyperdata.music
         private static void Main()
         {
 
-            WriteSet("allintervals", DiatonicIntervals.Default);
-            
-            IPitch root = TwelveToneEqualTemperament.Default.Find(16.350000);
 
-
-            
             Sequence sequence = new Sequence(ModernModes.Ionian);
 
+
             sequence
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)               
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)              
-                .Append(IntervalNumber.Second, IntervalDirection.Ascending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)               
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)             
-                .Append(IntervalNumber.Second, IntervalDirection.Descending)
-                .Append(IntervalNumber.Second, IntervalDirection.Descending);
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Third, IntervalDirection.Ascending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Fourth, IntervalDirection.Ascending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Third, IntervalDirection.Ascending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending)
+                .Prepend(IntervalNumber.Second, IntervalDirection.Descending);
 
-            WriteSet("sequence", sequence);
+            WriteSet("sequence", sequence.Reverse());
 
-
+            Console.WriteLine(DiatonicIntervals.Default.FindProduct(sequence));
 
             Console.WriteLine();
             Console.WriteLine("CF--------------");
@@ -73,14 +69,30 @@ namespace nl.hyperdata.music
             Console.WriteLine($"rule4 { sequence.Rule4() }");
             Console.WriteLine($"rule5 { sequence.Rule5() }");      
             Console.WriteLine($"rule6 { sequence.Rule6() }");
+            Console.WriteLine($"rule7 { sequence.Rule7() }");
+            Console.WriteLine($"rule8 { sequence.Rule8() }");
+            Console.WriteLine($"rule9 { sequence.Rule9() }");
+            Console.WriteLine($"rule10 { sequence.Rule10() }");
+            Console.WriteLine($"rule11 { sequence.Rule11() }");
+            Console.WriteLine($"rule12 { sequence.Rule12() }");
+            Console.WriteLine($"rule13 { sequence.Rule13() }");
 
+            //130.81
+           
+            var p = TwelveToneEqualTemperament.Default.Find(261.63);
+            Console.WriteLine("M---------------");
+     
+            foreach (IInterval interval in sequence.Reverse())
+            {
+                Console.WriteLine(p);
+                Console.WriteLine(interval);
+                player.Play(p, 200);
+                
+                p = TwelveToneEqualTemperament.Default.Transpose(p, interval);
+            }
 
-
-            //   player.Play(sequence.Select(x => x.Pitch), 300);
-
-            //  Task.Delay(100).Wait();
-
-
+            Console.WriteLine(p);
+            player.Play(p,   200);
 
             Console.ReadLine();
 

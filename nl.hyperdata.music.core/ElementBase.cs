@@ -92,6 +92,11 @@ namespace nl.hyperdata.music.core
 
         public static double operator *(ElementBase left, IElementBase right)
         {
+            if (left is null)
+            {
+                throw new ArgumentNullException(nameof(left));
+            }
+
             return left.Value * right.Value;
         }
 

@@ -45,7 +45,6 @@
     <Compile Include="Extensions\SequenceExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence.cs" />
-    <Compile Include="SequenceElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\nl.hyperdata.music.core\nl.hyperdata.music.core.csproj">

@@ -6,6 +6,7 @@
         Minor,
         Major,
         Perfect,
+        Tritone,
         Augmented,
         Diminished
     }

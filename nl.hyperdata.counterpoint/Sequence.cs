@@ -7,13 +7,14 @@ using System.Linq;
 using MoreLinq.Extensions;
 using nl.hyperdata.counterpoint.Extensions;
 using System.Collections;
+using System;
 
 namespace nl.hyperdata.counterpoint
 {
 
     public class Sequence : IEnumerable<IInterval>
     {
-        private static readonly DiatonicIntervals availableIntervals = new DiatonicIntervals();
+
         private readonly Stack<IInterval> stack = new Stack<IInterval>();
 
         public IMode Mode { get; }
@@ -23,48 +24,25 @@ namespace nl.hyperdata.counterpoint
             Mode = mode;
         }
 
-        public bool IsValid()
+ 
+        public Sequence Prepend(IntervalNumber number, IntervalDirection direction)
         {
-            return this.Rule1() && 
-                this.Rule2() && 
-                this.Rule3();
-        }
+            IInterval stackProduct = DiatonicIntervals.Default.FindProduct(stack);
 
-        /**
-        public IEnumerable<SequenceElement> Outline()
-        {
-            var u = elements.GroupAdjacent(x => x.Direction);
+            foreach (var interval in DiatonicIntervals.Default.Find(direction,number))
+            {
 
-
-            var result =  u.Zip(u.Skip(1), (p, v) =>
-                new SequenceElement
+                if(stackProduct == null)
                 {
-                    Pitch = p,
-                    Interval = new DiatonicIntervals().Find(v, p)
+
                 }
-            ).Reverse();
-
-            yield return elements.LastOrDefault();
-            
-            foreach(var elem in result)
-            {
-                yield return elem;
+                var testresult = DiatonicIntervals.Default.FindProduct(stackProduct, interval);
+           
+                if(Mode.Find( testresult) != null)
+                {
+                    stack.Push(interval);
+                }
             }
-        }
-        **/
-
-
-        public Sequence Append(IntervalNumber number, IntervalDirection direction)
-        {
-            if(stack.Count() == 0)
-            {
-
-            }
-            var current = stack.Peek();
-
-
-            
-
             return this;
         }
 
@@ -75,7 +53,7 @@ namespace nl.hyperdata.counterpoint
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)stack).GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

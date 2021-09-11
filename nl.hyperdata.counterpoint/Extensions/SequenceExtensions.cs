@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MoreLinq;
 using System.Text;
 using System.Threading.Tasks;
+using nl.hyperdata.music.core.Collections.Diatonic;
+using nl.hyperdata.music.core.Extensions;
 
 namespace nl.hyperdata.counterpoint.Extensions
 {
@@ -77,7 +80,7 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule4(this Sequence sequence)
         {
-            IInterval interval = sequence.Skip(2).FirstOrDefault();
+            IInterval interval = sequence.LastOrDefault();
             return interval != null && interval.Direction == IntervalDirection.Ascending &&
                 interval.Number == IntervalNumber.Second;
              
@@ -130,7 +133,7 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule9(this Sequence sequence)
         {
-            return true; // sequence
+            return !sequence.GroupAdjacent(x => x.Direction).Any(x => x.Count() > 4);
         }
 
         /// <summary>
@@ -140,7 +143,7 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule10(this Sequence sequence)
         {
-            return true; // sequence
+            return !sequence.Any(x=> x.Direction == IntervalDirection.None);
         }
 
         /// <summary>
@@ -150,7 +153,7 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule11(this Sequence sequence)
         {
-            return true; // sequence
+            return !sequence.Any(x => x.Number == IntervalNumber.Seventh || x.Quality == IntervalQuality.Diminished || x.Quality == IntervalQuality.Tritone || x.Quality == IntervalQuality.Augmented);
         }
 
         /// <summary>
@@ -160,7 +163,9 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule12(this Sequence sequence)
         {
-            return true; // sequence
+            var p = sequence.GroupAdjacent(x => x.Direction).Select(i=> DiatonicIntervals.Default.FindProduct(i))
+                .Any(x => x.Number == IntervalNumber.Seventh || x.Quality == IntervalQuality.Diminished || x.Quality == IntervalQuality.Tritone || x.Quality == IntervalQuality.Augmented);
+            return true;
         }
 
         /// <summary>
