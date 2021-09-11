@@ -15,7 +15,7 @@ namespace nl.hyperdata.counterpoint
     public class Sequence : IEnumerable<IInterval>
     {
 
-        private readonly Stack<IInterval> stack = new Stack<IInterval>();
+        private readonly IList<IInterval> stack = new List<IInterval>();
 
         public IMode Mode { get; }
 
@@ -24,8 +24,7 @@ namespace nl.hyperdata.counterpoint
             Mode = mode;
         }
 
- 
-        public Sequence Prepend(IntervalNumber number, IntervalDirection direction)
+        public Sequence Add(IntervalNumber number, IntervalDirection direction)
         {
             IInterval stackProduct = DiatonicIntervals.Default.FindProduct(stack);
 
@@ -40,7 +39,7 @@ namespace nl.hyperdata.counterpoint
            
                 if(Mode.Find( testresult) != null)
                 {
-                    stack.Push(interval);
+                    stack.Add(interval);
                 }
             }
             return this;

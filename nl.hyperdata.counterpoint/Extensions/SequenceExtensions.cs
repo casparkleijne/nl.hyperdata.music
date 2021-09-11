@@ -13,6 +13,59 @@ namespace nl.hyperdata.counterpoint.Extensions
     public static class SequenceExtensions
     {
 
+        //loose and unspecific
+        private static bool IsConsonant(this IInterval interval)
+        {
+           var result = 
+                (interval.Number == IntervalNumber.Second ||
+                interval.Number == IntervalNumber.Third ||
+                interval.Number == IntervalNumber.Fourth ||
+                interval.Number == IntervalNumber.Fifth ||
+                interval.Number == IntervalNumber.Sixth ||
+                interval.Number == IntervalNumber.Octave ||
+                interval.Number == IntervalNumber.Ninth ||
+                interval.Number == IntervalNumber.Tenth) &&
+                (interval.Quality == IntervalQuality.Minor ||
+                interval.Quality == IntervalQuality.Major ||
+                interval.Quality == IntervalQuality.Minor ||
+                interval.Quality == IntervalQuality.Perfect);
+            return result;
+        }
+
+        private static bool IsInRange(this IInterval interval)
+        {
+            if (interval is null)
+            {
+                return false;
+            }
+
+            return
+                (interval.Number == IntervalNumber.Fifth ||
+                interval.Number == IntervalNumber.Sixth ||
+                 interval.Number == IntervalNumber.Seventh ||
+                interval.Number == IntervalNumber.Octave ||
+                interval.Number == IntervalNumber.Ninth ||
+                interval.Number == IntervalNumber.Tenth);
+        }
+
+        //loose and unspecific
+        private static bool IsStep(this IInterval interval)
+        {
+            return
+                (interval.Number == IntervalNumber.Second);
+        }
+
+        private static bool IsSkip(this IInterval interval)
+        {
+            return
+                (interval.Number == IntervalNumber.Third);
+        }
+
+        private static bool IsLeap(this IInterval interval)
+        {
+            return
+               ! (interval.IsStep() || interval.IsSkip());
+        }
 
         private static IEnumerable<Func<Sequence, bool>> rules = new Func<Sequence, bool>[]
         {
@@ -39,18 +92,18 @@ namespace nl.hyperdata.counterpoint.Extensions
         }
 
         /// <summary>
-        /// 8 to 16 notes long of equal value 
+        /// V. 8 to 16 notes long of equal value 
+        /// that is 7 - 15 intervals
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule1(this Sequence sequence)
         {
-            return sequence.Count() >= 7 && sequence.Count() <= 15;
+            return sequence.Count() > 6  && sequence.Count() < 16;
         }
 
         /// <summary>
-        /// All notes must be diatonic
-        /// </summary>
+        /// V. All notes must be diatonic however just return true (for now)
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule2(this Sequence sequence)
@@ -59,45 +112,79 @@ namespace nl.hyperdata.counterpoint.Extensions
         }
 
         /// <summary>
-        /// Must start and end on tonic
+        /// V. Must start and end on tonic, the overall interval of the whole sequence must be Unison
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule3(this Sequence sequence)
         {
-            double current = sequence.FirstOrDefault().Value;
-            foreach(double ratio in sequence.Skip(1).Select(x=> x.Value))
-            {
-                current = ratio * current;
-            }
-            return current == 1;
+            var p = sequence.Aggregate((a, x) => DiatonicIntervals.Default.FindProduct(a, x));
+            return p.Direction == IntervalDirection.None;
         }
 
         /// <summary>
-        /// Must end supertonic, tonic
+        /// V. Must end supertonic, tonic, only checking supertonic
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule4(this Sequence sequence)
         {
             IInterval interval = sequence.LastOrDefault();
-            return interval != null && interval.Direction == IntervalDirection.Ascending &&
+            return interval != null && interval.Direction == IntervalDirection.Descending &&
                 interval.Number == IntervalNumber.Second;
-             
+        }
+
+
+        public static IInterval HighestFromstart(this Sequence sequence)
+        {   
+            IInterval current = sequence.FirstOrDefault();
+            IInterval highest = current;
+         
+            foreach (IInterval interval in sequence.Skip(1))
+            {
+                current = DiatonicIntervals.Default.FindProduct(current, interval);
+                if ((ElementBase)current > highest)
+                {
+                    highest = current;
+                }
+            };
+            return highest;
+        }
+
+        public static IInterval LowestFromstart(this Sequence sequence)
+        {
+           
+            IInterval current = sequence.FirstOrDefault();
+            IInterval lowest = current;
+            foreach (IInterval interval in sequence.Skip(1))
+            {
+                current = DiatonicIntervals.Default.FindProduct(current, interval);
+                if ((ElementBase)current < lowest)
+                {
+                    lowest = current;
+                }
+            };
+            return lowest;
         }
 
         /// <summary>
-        /// Range of a Sth to a 10th
+        /// V. Range of a Sth to a 10th
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule5(this Sequence sequence)
         {
-            return true; // sequence.Sum(x => x.Interval.Value) == 0;
+
+            var highest = sequence.HighestFromstart();
+            var lowest = sequence.LowestFromstart();
+
+            var result = DiatonicIntervals.Default.FindProduct(lowest, highest);
+
+            return result.IsInRange();
         }
 
         /// <summary>
-        /// Stepwise motion predominates though a few leaps are necessary
+        /// V. Stepwise motion predominates though a few leaps are necessary
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
@@ -113,8 +200,25 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule7(this Sequence sequence)
         {
-            return true; // sequence.Count(x => x.Interval.Number == IntervalNumber.Second) > sequence.Count(x => x.Interval.Number != IntervalNumber.Second);
+
+            var x = sequence.Pairwise((a, i) => a.IsLeap() ? i.Direction != a.Direction : true).All(v => v);
+        
+            return x; // sequence.Count(x => x.Interval.Number == IntervalNumber.Second) > sequence.Count(x => x.Interval.Number != IntervalNumber.Second);
         }
+
+    
+        public static IEnumerable<IInterval> Compress(this IEnumerable<IInterval> source)
+        {
+            var g = source
+                .GroupAdjacent(x => x.Direction)
+                .Select(x => DiatonicIntervals.Default.FindProduct(x));
+
+            while (g.Count() > 2)
+                g = g.Batch(2).Select(x => DiatonicIntervals.Default.FindProduct(x));
+
+            return g;
+        }
+
 
         /// <summary>
         /// Must have a single melodic high point that is consonant with tonic
@@ -123,11 +227,22 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule8(this Sequence sequence)
         {
-            return true; // sequence
-        }
+
+
+            var test = sequence.Select((s, o) => DiatonicIntervals.Default.FindProduct(sequence.Skip(o)))
+                       .Where(x => x.Direction == IntervalDirection.Descending)
+                       .GroupBy(x => x.Value)
+                       .OrderBy(x => x.Key)
+                       .FirstOrDefault()?
+                       .Where(i => i.IsConsonant())
+                       .Count() == 1;
+           
+            return test;
+
+         }
 
         /// <summary>
-        /// Do not exceed 5 notes in the same direction
+        /// V. Do not exceed 5 notes in the same direction
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
@@ -137,7 +252,7 @@ namespace nl.hyperdata.counterpoint.Extensions
         }
 
         /// <summary>
-        /// No repeated notes in consecutive measures
+        /// V. No repeated notes in consecutive measures
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
@@ -147,13 +262,14 @@ namespace nl.hyperdata.counterpoint.Extensions
         }
 
         /// <summary>
-        ///  No melodic intervals of 7ths or augmented or diminished intervals
+        /// V. No melodic intervals of 7ths or augmented or diminished intervals
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>The result.</returns>
         public static bool Rule11(this Sequence sequence)
         {
-            return !sequence.Any(x => x.Number == IntervalNumber.Seventh || x.Quality == IntervalQuality.Diminished || x.Quality == IntervalQuality.Tritone || x.Quality == IntervalQuality.Augmented);
+            var test =  !sequence.Any(x => !x.IsConsonant());
+            return test;
         }
 
         /// <summary>
@@ -163,9 +279,15 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule12(this Sequence sequence)
         {
-            var p = sequence.GroupAdjacent(x => x.Direction).Select(i=> DiatonicIntervals.Default.FindProduct(i))
-                .Any(x => x.Number == IntervalNumber.Seventh || x.Quality == IntervalQuality.Diminished || x.Quality == IntervalQuality.Tritone || x.Quality == IntervalQuality.Augmented);
-            return true;
+            var p = !sequence.GroupAdjacent(x => x.Direction).Select(i=> DiatonicIntervals.Default.FindProduct(i))
+                .Any(x => !x.IsConsonant());
+            return p;
+        }
+
+
+        private static IEnumerable<T> Rotate<T>(this IEnumerable<T> source, int i = 1)
+        {
+            return source.Skip(i).Concat(source.Take(1));
         }
 
         /// <summary>
@@ -175,7 +297,33 @@ namespace nl.hyperdata.counterpoint.Extensions
         /// <returns>The result.</returns>
         public static bool Rule13(this Sequence sequence)
         {
-            return true; // sequence
+
+
+            var melodicsequence = sequence
+                .Skip(1)
+                .Select((s, i) => sequence.Zip(sequence.Rotate(i + 1), (x, a) => x.Direction == a.Direction && x.Quality == a.Quality && x.Number == a.Number)
+                .GroupAdjacent(x => x)
+                .Where(x => x.Key && x.Count() > 2))
+                .Where(x => x.Any())
+                .Any();
+
+            // thrills;
+            IInterval current = sequence.FirstOrDefault();
+            int rep = 0;
+            foreach(IInterval interval in sequence.Skip(1))
+            {
+                if(interval.Direction!=current.Direction)
+                {
+                    rep++;
+                }
+                else
+                {
+                    rep = 0;
+                }
+                current = interval;
+            }
+
+            return rep < 4 || !melodicsequence; // sequence
         }
 
         //2. All notes must be diatonic
