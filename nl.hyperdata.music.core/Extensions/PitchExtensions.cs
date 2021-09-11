@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace nl.hyperdata.music.core.Extensions
 {
     public static class PitchExtensions
     {
-
-
         public static IPitch Transpose(this IEnumerable<IPitch> context, IPitch pitch, IInterval interval)
         {
             if (context is null)
@@ -26,9 +23,8 @@ namespace nl.hyperdata.music.core.Extensions
             }
 
             return context.Find((ElementBase)pitch * (ElementBase)interval);
-
         }
-        
+
         public static IInterval TransposeInterval(this IEnumerable<IPitch> context, IPitch pitch, IEnumerable<IInterval> intervals)
         {
             if (context is null)
@@ -46,9 +42,9 @@ namespace nl.hyperdata.music.core.Extensions
                 throw new ArgumentNullException(nameof(intervals));
             }
 
-            foreach(var interval in intervals)
+            foreach (var interval in intervals)
             {
-                if(context.Transpose(pitch,interval)!=null)
+                if (context.Transpose(pitch, interval) != null)
                 {
                     return interval;
                 }
@@ -56,6 +52,5 @@ namespace nl.hyperdata.music.core.Extensions
 
             return null;
         }
-
     }
 }

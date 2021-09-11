@@ -2,19 +2,13 @@
 using nl.hyperdata.music.core.Collections;
 using nl.hyperdata.music.core.Collections.Diatonic;
 using nl.hyperdata.music.core.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using MoreLinq.Extensions;
-using nl.hyperdata.counterpoint.Extensions;
 using System.Collections;
-using System;
+using System.Collections.Generic;
 
 namespace nl.hyperdata.counterpoint
 {
-
     public class Sequence : IEnumerable<IInterval>
     {
-
         private readonly IList<IInterval> stack = new List<IInterval>();
 
         public IMode Mode { get; }
@@ -28,16 +22,14 @@ namespace nl.hyperdata.counterpoint
         {
             IInterval stackProduct = DiatonicIntervals.Default.FindProduct(stack);
 
-            foreach (var interval in DiatonicIntervals.Default.Find(direction,number))
+            foreach (var interval in DiatonicIntervals.Default.Find(direction, number))
             {
-
-                if(stackProduct == null)
+                if (stackProduct == null)
                 {
-
                 }
                 var testresult = DiatonicIntervals.Default.FindProduct(stackProduct, interval);
-           
-                if(Mode.Find( testresult) != null)
+
+                if (Mode.Find(testresult) != null)
                 {
                     stack.Add(interval);
                 }

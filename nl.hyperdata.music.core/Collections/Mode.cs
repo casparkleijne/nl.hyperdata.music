@@ -6,7 +6,6 @@ namespace nl.hyperdata.music.core.Collections
     {
         public Mode(IEnumerable<IInterval> intervals) : base(intervals)
         {
-
         }
     }
 }

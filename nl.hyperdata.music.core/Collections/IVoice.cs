@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace nl.hyperdata.music.core.Collections
+﻿namespace nl.hyperdata.music.core.Collections
 {
-    public interface IVoice :  ICollectionBase<IPitch>
+    public interface IVoice : ICollectionBase<IPitch>
     {
         /**
         Soprano: B3(A3) - D6 (246.942 - 1174.66Hz). Some coloratua soprano roles go up to A6 (1760Hz)
@@ -16,6 +14,5 @@ namespace nl.hyperdata.music.core.Collections
         */
         IPitch Lowest { get; }
         IPitch Highest { get; }
-
     }
 }

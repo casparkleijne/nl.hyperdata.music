@@ -1,10 +1,9 @@
 ﻿using System;
 
-
 namespace nl.hyperdata.music.core
 {
-    public abstract class ElementBase :  IElementBase
-    { 
+    public abstract class ElementBase : IElementBase
+    {
         public double Value { get; }
 
         protected ElementBase(double innervalue)
@@ -26,7 +25,6 @@ namespace nl.hyperdata.music.core
         {
             return (int)((Value * 1000000) - (other * 1000000));
         }
-
 
         public override bool Equals(object obj)
         {
@@ -53,7 +51,6 @@ namespace nl.hyperdata.music.core
             return Value.GetHashCode();
         }
 
- 
         public static bool operator ==(ElementBase left, IElementBase right)
         {
             if (ReferenceEquals(left, null))
@@ -88,7 +85,6 @@ namespace nl.hyperdata.music.core
         {
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
-
 
         public static double operator *(ElementBase left, IElementBase right)
         {
@@ -145,7 +141,6 @@ namespace nl.hyperdata.music.core
             return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
         }
 
-
         public static double operator *(ElementBase left, double right)
         {
             return left.Value * right;
@@ -162,4 +157,3 @@ namespace nl.hyperdata.music.core
         }
     }
 }
-

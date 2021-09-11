@@ -13,8 +13,9 @@ namespace nl.hyperdata.music.core.Extensions
 
         public static IInterval Find(this IEnumerable<IInterval> context, IntervalDirection direction, IntervalQuality quality, IntervalNumber number)
         {
-            return context.Find(direction,number).FirstOrDefault(x => x.Quality == quality);
+            return context.Find(direction, number).FirstOrDefault(x => x.Quality == quality);
         }
+
         public static IInterval Find(this IEnumerable<IInterval> context, IPitch start, IPitch end)
         {
             if (context is null)
@@ -44,6 +45,7 @@ namespace nl.hyperdata.music.core.Extensions
 
             return context.Where(i => i.Direction == direction && i.Number == number);
         }
+
         public static IInterval FindProduct(this IEnumerable<IInterval> context, IEnumerable<IInterval> intervals)
         {
             if (context is null)
@@ -55,7 +57,7 @@ namespace nl.hyperdata.music.core.Extensions
             {
                 throw new ArgumentNullException(nameof(intervals));
             }
-            if(intervals.Count() == 0)
+            if (intervals.Count() == 0)
             {
                 return context.Find(1);
             }
@@ -82,6 +84,5 @@ namespace nl.hyperdata.music.core.Extensions
 
             return context.Find((ElementBase)left * right);
         }
-
     }
 }

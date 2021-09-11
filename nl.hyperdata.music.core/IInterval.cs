@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace nl.hyperdata.music.core
+﻿namespace nl.hyperdata.music.core
 {
-    public interface IInterval :  IElementBase
+    public interface IInterval : IElementBase
     {
         IntervalDirection Direction { get; }
         IntervalNumber Number { get; }

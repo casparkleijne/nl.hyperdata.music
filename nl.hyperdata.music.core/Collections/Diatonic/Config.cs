@@ -12,6 +12,4 @@ namespace nl.hyperdata.music.core.Collections.Diatonic
         public static readonly int PitchIndexCorrection = (4 * -12) - 1;
         public static readonly int ScaleStepCorrection = -28;
     }
-
-
 }

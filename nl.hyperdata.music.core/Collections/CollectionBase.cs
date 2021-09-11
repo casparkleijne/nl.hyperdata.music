@@ -7,23 +7,19 @@ namespace nl.hyperdata.music.core.Collections
 {
     public abstract class CollectionBase<T> : ICollectionBase<T>
     {
-
         public CollectionBase(IEnumerable<T> context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-
         public int Count => Context.Count();
 
         public IEnumerable<T> Context { get; }
-
 
         public IEnumerator<T> GetEnumerator()
         {
             return Context.GetEnumerator();
         }
-
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -39,6 +35,5 @@ namespace nl.hyperdata.music.core.Collections
 
             throw new NotImplementedException();
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿
-using nl.hyperdata.music.core.Extensions;
+﻿using nl.hyperdata.music.core.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +14,5 @@ namespace nl.hyperdata.music.core.Collections
 
         public IMode Mode { get; }
         public IPitch Root { get; }
-        
     }
 }

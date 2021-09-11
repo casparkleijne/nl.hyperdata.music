@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace nl.hyperdata.music.core
 {
@@ -7,7 +6,6 @@ namespace nl.hyperdata.music.core
     {
         private static (IntervalQuality, IntervalNumber)[] Intervals = new (IntervalQuality, IntervalNumber)[]
             {
-
                 (IntervalQuality.Perfect    ,IntervalNumber.Prime),
                 (IntervalQuality.Minor      ,IntervalNumber.Second ),
                 (IntervalQuality.Major      ,IntervalNumber.Second ),
@@ -28,9 +26,7 @@ namespace nl.hyperdata.music.core
                 (IntervalQuality.Perfect    ,IntervalNumber.Eleventh),
                 (IntervalQuality.Augmented  ,IntervalNumber.EleventhTritone),
                 (IntervalQuality.Perfect    ,IntervalNumber.Twelveth),
-
             };
-
 
         public Interval(double factor) : base(Math.Pow(2.00, factor / 12.00))
         {
@@ -54,8 +50,5 @@ namespace nl.hyperdata.music.core
         {
             return $"{ Quality}{Number} {Direction} { Value }";
         }
-
-   
     }
-
 }
